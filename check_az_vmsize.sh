@@ -74,7 +74,7 @@ then
 echo "${GREEN}There is no listing for such specs please try again or hit CTRL+C${NV}"
 else
 echo "${GREEN}******* using list-sizes *******${NC}"
-az vm list-sizes -l $location --query "sort_by(@,&memoryInMb)[?numberOfCores == \`$cpu\` && contains(name ,\`${serie}${cpu}\`)].{VM:name,VCPUS:numberOfCores,Memory_MB:memoryInMb,maxDisks:maxDataDiskCount,OSDisk_maxMB:osDiskSizeInMb,UserDisk_maxMB:resourceDiskSizeInMb} | sort_by(@,&VM)"
+az vm list-sizes -l $location --query "sort_by(@,&memoryInMb)[?numberOfCores == \`$cpu\` && contains(name ,\`${serie}${cpu}\`)].{VM:name,VCPUS:numberOfCores,Memory_MB:memoryInMb,maxDisks:maxDataDiskCount,OSDisk_maxMB:osDiskSizeInMb,UserDisk_maxMB:resourceDiskSizeInMb} " #| sort_by(@,&VM)
 echo
 echo "${GREEN}******** using list-skus supporting availability zones. *******${NC}"
 az vm list-skus -z --resource-type  virtualMachines --size "${serie}${cpu}" -l $location --query "[?contains(name, \`${serie}${cpu}a\`) || contains(name, \`${serie}${cpu}d\`) || contains(name, \`${serie}${cpu}s\`)].{name:name,size:size,VCPU:capabilities[?name==\`vCPUs\`].value|[0],MemoryGB:capabilities[?name==\`MemoryGB\`].value|[0],maxDisks:capabilities[?name==\`MaxDataDiskCount\`].value|[0],OSDisk_maxMB:capabilities[?name==\`OSVhdSizeMB\`].value|[0],UserDisk_maxMB:capabilities[?name==\`MaxResourceVolumeMB\`].value|[0],zones:to_string(locationInfo[0].zones),location:locations[]|[0]} | sort_by(@,&name)| sort_by(@,&VCPU)"

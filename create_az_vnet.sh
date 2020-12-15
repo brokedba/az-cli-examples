@@ -32,8 +32,9 @@ done
  while true; do 
    read -p "Enter the VNET name you wish to create [${BLUE}CLI-VNET${NC}]: " vnet_name
    vnet_name=${vnet_name:-CLI-VNET}
-   if [ -z "$vnet_name" ];
-   then  echo "The entered name is empty Please retry";
+   vnet_check=$(az network vnet show -g $rg_name -n $vnet_name --query name -o tsv)
+   if [ -n "$vnet_check" ];
+   then echo "${RED}The entered vnet exists alreay in $rg_name resource group. Please choose anothe one${NC}";
    else
    echo -e selected VNET name : ${GREEN}$vnet_name${NC}
    break
@@ -46,7 +47,7 @@ done
   read -p "Enter the subnet name you wish to add [${BLUE}CLI-SUB${NC}]: " sub_name
   sub_name=${sub_name:-CLI-SUB}
  if [ -z "$sub_name" ];
-    then  echo "${RED}The entered name is empty, Please retry. ${NC} ";
+    then  echo "${RED}The entered name is empty. Please retry. ${NC} ";
  else
   echo -e selected Subnet name : ${GREEN}$sub_name${NC}
   break
@@ -110,14 +111,14 @@ do
           echo
         echo -e "${NC}*******************${GREEN}  Security Group detail${NC}  ******************"
         echo
-          az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-SSH-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "22" --destination-address-prefix "*" --destination-port-range 22 --description "SSH ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:destinationPortRange,Type:direction,Priority:priority}'
+          az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-SSH-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22 --description "SSH ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:destinationPortRange,Type:direction,Priority:priority}'
           break
           ;;
         "SSH, HTTP, and HTTPS")
          sg_name=$(az network nsg create -g $rg_name -n sg_"${sub_name}"_WEB  --query 'NewNSG.name' -o tsv)
         echo -e "${NC}*******************${GREEN}  Security Group detail${NC}  ******************"
         echo
-         az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEB-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range 22 80 443 --destination-address-prefix "*" --destination-port-range 22 80 443 --description "SSH-HTTP-HTTPS ingress trafic"  --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
+         az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEB-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22 80 443 --description "SSH-HTTP-HTTPS ingress trafic"  --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
           break
           ;;
           
@@ -125,7 +126,7 @@ do
         sg_name=$(az network nsg create -g $rg_name -n sg_"${sub_name}"_WEB_RDP  --query 'NewNSG.name' -o tsv)
         echo -e "${NC}*******************${GREEN}  Security Group detail${NC}  ******************"
         echo
-          az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEBRDP-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range 3389 80 443 --destination-address-prefix "*" --destination-port-range 3389 80 443 --description "RDP-HTTP-HTTPS ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
+          az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEBRDP-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 3389 80 443 --description "RDP-HTTP-HTTPS ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
           break
           ;;               
         *) echo "invalid option";;

@@ -5,7 +5,7 @@ GREEN=$'\e\033[0;32m'
 BLUE=$'\e\033[1;34m'
 NC=$'\e\033[0m' # No Color
 location=eastus
-echo " >> Default Location is ${GREEN}$location${NC}. To change it, modify the vairable ${GREEN}\$location${NC} at the top of this script" 
+echo " >> Default Location is ${GREEN}$location${NC}. To change it, modify the variable ${GREEN}\$location${NC} at the top of this script" 
 echo "******* azure vm shape Selecta ! ************"
 echo "      Choose your vm compute ||{**}||${GREEN} " 
 echo 

@@ -123,14 +123,14 @@ then
             echo
             echo -e "${NC}****************${GREEN}  Security Group detail${NC}  ******************"
             echo
-            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-SSH-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "22" --destination-address-prefix "*" --destination-port-range 22 --description "SSH ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:destinationPortRange,Type:direction,Priority:priority}'
+            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-SSH-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22 --description "SSH ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:destinationPortRange,Type:direction,Priority:priority}'
             break
             ;;
             "SSH, HTTP, and HTTPS")
             sg_name=$(az network nsg create -g $rg_name -n sg_"${sub_name}"_WEB  --query 'NewNSG.name' -o tsv)
             echo -e "${NC}****************${GREEN}  Security Group detail${NC}  ******************"
             echo
-            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEB-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range 22 80 443 --destination-address-prefix "*" --destination-port-range 22 80 443 --description "SSH-HTTP-HTTPS ingress trafic"  --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
+            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEB-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22 80 443 --description "SSH-HTTP-HTTPS ingress trafic"  --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
             break
             ;;
             
@@ -138,7 +138,7 @@ then
             sg_name=$(az network nsg create -g $rg_name -n sg_"${sub_name}"_WEB_RDP  --query 'NewNSG.name' -o tsv)
             echo -e "${NC}****************${GREEN}  Security Group detail${NC}  ******************"
             echo
-            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEBRDP-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range 3389 80 443 --destination-address-prefix "*" --destination-port-range 3389 80 443 --description "RDP-HTTP-HTTPS ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
+            az network nsg rule create -g $rg_name --nsg-name $sg_name -n Allow-WEBRDP-IN --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 3389 80 443 --description "RDP-HTTP-HTTPS ingress trafic" --query '{Name:name,Source:sourceAddressPrefix,PORT:to_string(destinationPortRanges),Type:direction,Priority:priority}'
             break
             ;;               
             *) echo "invalid option";;

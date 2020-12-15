@@ -270,7 +270,7 @@ fi
   echo ...
  # Create a public IP addresses for the VM  
 echo "${BLUE}Public IP creation... ${NC}"
-az network public-ip create --resource-group $rg_name -n "${instance_name}_pubip" --allocation-method Dynamic --query "publicIp.{Name:name,location:location,stat:provisioningState,Allcoation:publicIpAllocationMethod}"
+az network public-ip create --resource-group $rg_name -n "${instance_name}_pubip" --allocation-method Dynamic --query "publicIp.{Name:name,location:location,stat:provisioningState,Allocation:publicIpAllocationMethod}"
 echo "${BLUE}Network interface creation... ${NC}"
 # Create a network interface for the VM  
 az network nic create -g "$rg_name" --vnet-name $vnet_name --subnet $sub_name -n "${instance_name}_Nic" --network-security-group "$sg_name" --public-ip-address "${instance_name}_Pubip" --query "{name:NewNIC.name,state:NewNIC.provisioningState,privateIP:NewNIC.ipConfigurations[]|[0].privateIpAddress}"
@@ -306,7 +306,7 @@ public_key=${public_key:-~/id_rsa_az.pub}  # this is a GITbash path
 private_key=$(echo "$public_key" |awk -F[.] '{print $1}')
 echo selected public key:${GREEN} $public_key${NC}
 # run the below which will launch the instance [If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.]
-  az vm create -g "$rg_name" --name "$instance_name" --image "${urn}" --size $vm_size --nics "${instance_name}_Nic" $userdata --admin-username "$user" --ssh-key-values "$public_key" --os-disk-size-gb 20
+  az vm create -g "$rg_name" --name "$instance_name" --image "${urn}" --size $vm_size --nics "${instance_name}_Nic" $userdata --admin-username "$user" --ssh-key-values "$public_key" 
   pub_ip=$(az vm show -g "$rg_name" -n "$instance_name" -d --query "publicIps" -o tsv)
   echo "ssh connection to the instance ==> sudo ssh -i $private_key ${user}@${pub_ip}"
 fi

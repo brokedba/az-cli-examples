@@ -2,7 +2,7 @@
 
 - See my blog for more info  http://www.brokedba.com/2020/12/deploy-webserver-vm-using-azure-cli-and.html
 
-# cli examples for Other platforms
+# cli examples for other platforms
 - AWS-CLI https://github.com/brokedba/aws-cli-examples
 - OCI-CLI https://github.com/brokedba/oci-cli-examples 
 

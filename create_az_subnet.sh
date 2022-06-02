@@ -148,6 +148,7 @@ then
     echo "****  ${GREEN}associate the NSG with the subnet $sub_name  ${NC}****"
     echo
     az network vnet subnet update --vnet-name $vnet_name --name $sub_name -g $rg_name --network-security-group $sg_name  
+    # FOR VNICS: az network nic update -g MyResourceGroup -n MyNic --network-security-group MyNewNsg
 else
 echo "${GREEN} checking the associated  NSG : "$sg_name" ${NC}"
 # check if the assigned nsg has the required inbound rules

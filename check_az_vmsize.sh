@@ -4,14 +4,17 @@ RED=$'\e\033[0;31m'
 GREEN=$'\e\033[0;32m'
 BLUE=$'\e\033[1;34m'
 NC=$'\e\033[0m' # No Color
-location=eastus
-echo " >> Default Location is ${GREEN}$location${NC}. To change it, modify the variable ${GREEN}\$location${NC} at the top of this script" 
-echo "******* azure vm shape Selecta ! ************"
-echo "      Choose your vm compute ||{**}||${GREEN} " 
+# location=eastus
+location=canadacentral
 echo 
-echo "list all vm sizes in eastus region depending on the CPU and Series selected . "
+echo " Note: Default ${RED}Location${NC} is ${GREEN}$location${NC}. To change it, modify the variable ${GREEN}\$location${NC} at the top of this script" 
+echo "                  ******* ${BLUE}Azure VM size Selecta ! ${NC}************"
+echo "                           Choose your VM compute ||{**}||"
+echo "                  *********************************************${GREEN}" 
+echo 
+echo "List all vm sizes in ${RED}${location}${GREEN} region depending on the CPU and Series selected. "
 echo
-echo  ">> Pick vm size = CPU${NC}"
+echo  ">> VM size = number of CPU${NC}"
 while true; do
 PS3='Select a number of cores and press Enter: '
 options=("1 VCPU" "2 VCPUs" "4 VCPUs" "8 VCPUs" "16 VCPUs")
@@ -43,9 +46,9 @@ do
   esac
 done 
 
-echo "${GREEN}>> Vm compute Series${NC}"
+echo "${GREEN}>> Pick VM compute Series${NC}"
 PS3='Select a VM series and press Enter: '
-options=("A Series (Entry-level)" "B Series ( burstable)" "D Series (General purpose)" "E Series (Optimized for in-memory)" )
+options=("A Series (Entry-level)" "B Series (Burstable)" "D Series (General purpose)" "E Series (Optimized for in-memory)" "M Series (Memory optimized )" "G Series (Memory and storage optimized )" "F Series (Compute optimized )")
 select opt in "${options[@]}"
 do 
   case $opt in
@@ -53,7 +56,7 @@ do
         serie="_A"
         break
         ;;
-        "B Series ( burstable)")
+        "B Series (Burstable)")
         serie="_B"
         break
           ;;
@@ -63,6 +66,18 @@ do
         ;; 
         "E Series (Optimized for in-memory)")
         serie="_E"
+        break 
+        ;; 
+        "M Series (Memory optimized )")
+        serie="_M"
+        break 
+        ;; 
+        "G Series (Memory and storage optimized )")
+        serie="_G"
+        break 
+        ;; 
+        "F Series (Compute optimized )")
+        serie="_F"
         break  
         ;;       
         *) echo "invalid option";;
@@ -73,12 +88,20 @@ if [ -z $vm_size ];
 then
 echo "${GREEN}There is no listing for such specs please try again or hit CTRL+C${NV}"
 else
-echo "${GREEN}******* using list-sizes *******${NC}"
-az vm list-sizes -l $location --query "sort_by(@,&memoryInMb)[?numberOfCores == \`$cpu\` && contains(name ,\`${serie}${cpu}\`)].{VM:name,VCPUS:numberOfCores,Memory_MB:memoryInMb,maxDisks:maxDataDiskCount,OSDisk_maxMB:osDiskSizeInMb,UserDisk_maxMB:resourceDiskSizeInMb} " #| sort_by(@,&VM)
+echo "${GREEN}********************************************************${NC}"
+echo "${GREEN}      Non constrained CPU VM list (Using list-sizes)       ${NC}"
+echo "${GREEN}********************************************************${NC}"
+az vm list-sizes -l $location --query "sort_by(@,&name)[?numberOfCores == \`$cpu\` && contains(name ,\`${serie}${cpu}\`) && !contains(name,'-')].{VM:name,VCPUS:numberOfCores,Memory_MB:memoryInMb,maxDisks:maxDataDiskCount,OSDisk_maxMB:osDiskSizeInMb,TempDisk_maxMB:resourceDiskSizeInMb} " -o table #| sort_by(@,&VM)
 echo
-echo "${GREEN}******** using list-skus supporting availability zones. *******${NC}"
-az vm list-skus -z --resource-type  virtualMachines --size "${serie}${cpu}" -l $location --query "[?contains(name, \`${serie}${cpu}a\`) || contains(name, \`${serie}${cpu}d\`) || contains(name, \`${serie}${cpu}s\`)].{name:name,size:size,VCPU:capabilities[?name==\`vCPUs\`].value|[0],MemoryGB:capabilities[?name==\`MemoryGB\`].value|[0],maxDisks:capabilities[?name==\`MaxDataDiskCount\`].value|[0],OSDisk_maxMB:capabilities[?name==\`OSVhdSizeMB\`].value|[0],UserDisk_maxMB:capabilities[?name==\`MaxResourceVolumeMB\`].value|[0],zones:to_string(locationInfo[0].zones),location:locations[]|[0]} | sort_by(@,&name)| sort_by(@,&VCPU)"
+
+echo "${GREEN}********************************************************${NC}"
+echo "${GREEN}       Including Constrained CPU VM list (Using list-skus) ${NC}"
+echo "${GREEN}********************************************************${NC}"
+#az vm list-skus -z --resource-type  virtualMachines --size "${serie}${cpu}" -l $location --query "[?contains(name, \`${serie}${cpu}a\`) || contains(name, \`${serie}${cpu}d\`) || contains(name, \`${serie}${cpu}s\`)].{name:name,size:size,VCPU:capabilities[?name==\`vCPUs\`].value|[0],MemoryGB:capabilities[?name==\`MemoryGB\`].value|[0],maxDisks:capabilities[?name==\`MaxDataDiskCount\`].value|[0],OSDisk_maxMB:capabilities[?name==\`OSVhdSizeMB\`].value|[0],UserDisk_maxMB:capabilities[?name==\`MaxResourceVolumeMB\`].value|[0],zones:to_string(locationInfo[0].zones),location:locations[]|[0]} | sort_by(@,&name)| sort_by(@,&VCPU)" -o table
+az vm list-skus -z --resource-type  virtualMachines --size "${serie}" -l $location --query "[?capabilities[?name==\`vCPUsAvailable\`].value|[0] == '${cpu}'].{name:name,VCPU:capabilities[?name==\`vCPUs\`].value|[0],ActualVCPU:capabilities[?name==\`vCPUsAvailable\`].value|[0],MemoryGB:capabilities[?name==\`MemoryGB\`].value|[0],maxDisks:capabilities[?name==\`MaxDataDiskCount\`].value|[0],OSDiskMB:capabilities[?name==\`OSVhdSizeMB\`].value|[0],TempDisk_MaxMB:capabilities[?name==\`MaxResourceVolumeMB\`].value|[0],MaxVnics:capabilities[?name==\`MaxNetworkInterfaces\`].value|[0],zones:to_string(locationInfo[0].zones),region:locations[]|[0]} | reverse(sort_by(@,&name))" -o table
+
 break
+#contains(name, \`${serie}\`) &&
 fi
 done
 

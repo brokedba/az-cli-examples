@@ -12,5 +12,4 @@
 
 **Demo for Az-VM size Selector** 
 
-![az_vmsize_final_lightOptimized](https://user-images.githubusercontent.com/29458929/232410238-6fa6f9ff-596e-4f72-99f3-22ec27d74532.gif)
 ![az_vmsize_final_lightOptimized2](https://user-images.githubusercontent.com/29458929/232410502-ac6aa64d-8bd4-47e8-86bf-42af90fa5ab4.gif)

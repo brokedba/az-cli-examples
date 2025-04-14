@@ -1,4 +1,4 @@
-# Azure Resource Tutorials (Coming Soon!)
+# Azure Resource Tutorials
 
 This section is currently under development and will soon host a collection of tutorials focused on various Microsoft Azure resources.
 

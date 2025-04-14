@@ -2,18 +2,18 @@
 
 This section is currently under development and will soon host a collection of tutorials focused on various Microsoft Azure resources.
 
-## What to Expect
+## 🙋🏻‍♂️ What to Expect
 
 We plan to add practical, step-by-step guides covering the deployment, configuration, and management of key Azure services. The goal is to provide clear examples and best practices that you can leverage in your own projects.
 
-## Location
+## 🔎 Location
 
 All tutorials will be organized within the `/tutorials` directory of this repository once they are available.
 
 ➡️**IAM**
 - 🛡️[Add_RG_Custom_Role](./iam/add_rg_custom_role.md)
 
-## Planned Topics (Examples)
+## ✍🏻 Planned Topics (Examples)
 
 While subject to change, some areas we aim to cover include:
 

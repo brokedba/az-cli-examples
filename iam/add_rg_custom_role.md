@@ -19,8 +19,8 @@ Scoped for assignment only within a specific resource group (e.g., `CloudDude`).
 
 ```json
 {
-  "properties": {
-    "roleName": "vm-vnet-role",
+    "Name": "vm-vnet-role",
+    "IsCustom": true,
     "description": "Allows full management of Virtual Machines and Virtual Networks and their related core components (Disks, NICs, Public IPs, NSGs, Route Tables). Assignable only within the CloudDude resource group.",
     "assignableScopes": [
       "/subscriptions/{yourSubscriptionId}/resourceGroups/CloudDude"
@@ -53,7 +53,6 @@ Scoped for assignment only within a specific resource group (e.g., `CloudDude`).
         "notDataActions": []
       }
     ]
-  }
 }
 ```
 

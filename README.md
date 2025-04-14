@@ -16,6 +16,6 @@ Check ➡️[Tutorials section](./tutorials)
 
 ![az_vmsize_final_lightOptimized2](https://user-images.githubusercontent.com/29458929/232410502-ac6aa64d-8bd4-47e8-86bf-42af90fa5ab4.gif)
 
-# cli examples for other platforms
+# ✨🌏cli examples for other platforms
 - AWS-CLI https://github.com/brokedba/aws-cli-examples
 - OCI-CLI https://github.com/brokedba/oci-cli-examples 

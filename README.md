@@ -1,6 +1,12 @@
 # az-cli-examples
 
-- See my blog for more info  http://www.brokedba.com/2020/12/deploy-webserver-vm-using-azure-cli-and.html
+# 1. Azure Resource Tutorials (Coming Soon!) 🚀
+
+This section is currently under development and will soon host a collection of tutorials focused on various Microsoft Azure resources. 
+Check ➡️[Tutorials section](./tutorials)
+# 2. Interactive scripts to manage azure resources
+
+- Please check the below example for deploying a vnet or an instance using my shell script. See my blog for more info  http://www.brokedba.com/2020/12/deploy-webserver-vm-using-azure-cli-and.html
 
 # cli examples for other platforms
 - AWS-CLI https://github.com/brokedba/aws-cli-examples

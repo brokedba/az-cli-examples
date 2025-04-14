@@ -11,7 +11,7 @@ We plan to add practical, step-by-step guides covering the deployment, configura
 All tutorials will be organized within the `/tutorials` directory of this repository once they are available.
 
 ➡️**IAM**
-- 🛡️[Add_RG_Custom_Role](iam/add_rg_custom_role.md)
+- 🛡️[Add_RG_Custom_Role](./iam/add_rg_custom_role.md)
 
 ## Planned Topics (Examples)
 

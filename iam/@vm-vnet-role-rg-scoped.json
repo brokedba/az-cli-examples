@@ -1,6 +1,6 @@
 {
-  "properties": {
     "roleName": "vm-vnet-role",
+    "IsCustom": true,
     "description": "Allows full management of Virtual Machines and Virtual Networks and their related core components (Disks, NICs, Public IPs, NSGs, Route Tables). Assignable only within the CloudDude resource group.",
     "assignableScopes": [
       "/subscriptions/{yourSubscriptionId}/resourceGroups/<YourResourceGroup>"  // <-- IMPORTANT: Replace {yourSubscriptionId} and 'MyresourceGroup' with the exact Sub,RG name respectively
@@ -33,5 +33,4 @@
         "notDataActions": []
       }
     ]
-  }
 }

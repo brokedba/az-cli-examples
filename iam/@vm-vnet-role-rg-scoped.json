@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "roleName": "vm-vnet-role",
+    "description": "Allows full management of Virtual Machines and Virtual Networks and their related core components (Disks, NICs, Public IPs, NSGs, Route Tables). Assignable only within the CloudDude resource group.",
+    "assignableScopes": [
+      "/subscriptions/{yourSubscriptionId}/resourceGroups/<YourResourceGroup>"  // <-- IMPORTANT: Replace {yourSubscriptionId} and 'MyresourceGroup' with the exact Sub,RG name respectively
+    ],
+    "permissions": [
+      {
+        "actions": [
+          "Microsoft.Compute/virtualMachines/*",
+          "Microsoft.Compute/disks/*",
+          "Microsoft.Compute/snapshots/*",
+          "Microsoft.Compute/images/read",
+          "Microsoft.Compute/images/write",
+          "Microsoft.Compute/images/delete",
+          "Microsoft.Compute/availabilitySets/*",
+          "Microsoft.Compute/locations/vmSizes/read",
+          "Microsoft.Network/virtualNetworks/*",
+          "Microsoft.Network/networkInterfaces/*",
+          "Microsoft.Network/publicIPAddresses/*",
+          "Microsoft.Network/networkSecurityGroups/*",
+          "Microsoft.Network/routeTables/*",
+          "Microsoft.Network/locations/operations/read",
+          "Microsoft.Network/locations/usages/read",
+          "Microsoft.Network/locations/CheckDnsNameAvailability/read",
+          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Storage/storageAccounts/read",
+          "Microsoft.Storage/storageAccounts/listKeys/action"
+        ],
+        "notActions": [],
+        "dataActions": [],
+        "notDataActions": []
+      }
+    ]
+  }
+}

@@ -98,6 +98,15 @@ New-AzRoleAssignment -SignInName "{userEmailOrSPN}" -RoleDefinitionName "vm-vnet
 # Or use -ObjectId for users, groups, or service principals (more precise):
 New-AzRoleAssignment -ObjectId "{assigneeObjectId}" -RoleDefinitionName "vm-vnet-role" -ResourceGroupName "CloudDude"
 ```
+#### Bonus: Managed Identity role assigment
+ ```bash
+ # Find Object id from managed identity
+   az identity show --name oidc-managed-gitaction -g CloudDude --query principalId -o tsv
+ # assign the role by reolacing principal id with above result
+ az role assignment create --assignee-object-id "{principal-id}" --role "vm-vnet-role" --resource-group "CloudDude" --scope "/subscriptions/{yourSubscriptionId}/resourceGroups/CloudDude"
+ 
+ ```
+
 ## Notes
 
 *   Replace placeholders (`{yourSubscriptionId}`, `{assigneeObjectIdOrEmail}`, etc.) with actual values.

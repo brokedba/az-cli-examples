@@ -25,8 +25,9 @@
     "Microsoft.Network/locations/CheckDnsNameAvailability/read",
     "Microsoft.Storage/storageAccounts/read",
     "Microsoft.Storage/storageAccounts/listKeys/action",
-    "Microsoft.Resources/subscriptions/resourceGroups/read",
-    "Microsoft.Resources/subscriptions/resourceGroups/write" // <-- Added permission to create/delete/update RGs
+    "Microsoft.Resources/subscriptions/resourceGroups/read", 
+    "Microsoft.Resources/subscriptions/resourceGroups/write", 
+    "Microsoft.Resources/subscriptions/resourcegroups/delete"
   ],
   "NotActions": [],
   "DataActions": [],

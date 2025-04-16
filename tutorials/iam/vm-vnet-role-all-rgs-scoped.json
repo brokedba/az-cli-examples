@@ -1,5 +1,5 @@
 {
-  "Name": "vm-vnet-rg-creator-role", // Renamed slightly to reflect new capability
+  "Name": "vm-vnet-rg-role", // Renamed slightly to reflect new capability
   "IsCustom": true,
   "Description": "Allows management of VMs/VNets and related components AND creation/management of resource groups within the assigned scope.",
   "AssignableScopes": [

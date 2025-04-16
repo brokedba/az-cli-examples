@@ -4,10 +4,9 @@
   "Description": "Allows management of VMs/VNets and related components AND creation/management of resource groups within the assigned scope.",
   "AssignableScopes": [
     // MUST typically be at subscription level to allow RG creation
-    "/subscriptions/{yourSubscriptionId}/resourceGroups"
+    "/subscriptions/{yourSubscriptionId}"
   ]
   "Actions": [
-    // VM Permissions
     "Microsoft.Compute/virtualMachines/*",
     "Microsoft.Compute/disks/*",
     "Microsoft.Compute/snapshots/*",
@@ -16,7 +15,6 @@
     "Microsoft.Compute/images/delete",
     "Microsoft.Compute/availabilitySets/*",
     "Microsoft.Compute/locations/vmSizes/read",
-    // Network Permissions
     "Microsoft.Network/virtualNetworks/*",
     "Microsoft.Network/networkInterfaces/*",
     "Microsoft.Network/publicIPAddresses/*",
@@ -25,10 +23,8 @@
     "Microsoft.Network/locations/operations/read",
     "Microsoft.Network/locations/usages/read",
     "Microsoft.Network/locations/CheckDnsNameAvailability/read",
-    // Storage Permissions (often needed for VMs)
     "Microsoft.Storage/storageAccounts/read",
     "Microsoft.Storage/storageAccounts/listKeys/action",
-    // Resource Group Permissions (Read & Write) - Added write
     "Microsoft.Resources/subscriptions/resourceGroups/read",
     "Microsoft.Resources/subscriptions/resourceGroups/write" // <-- Added permission to create/delete/update RGs
   ],
